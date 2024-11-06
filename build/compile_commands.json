@@ -1,0 +1,116 @@
+[
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DGLFW_INCLUDE_NONE -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/src/../include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glad/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glm/glm/.. -g -std=c++20 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIE -march=native -Wall -Wextra -Wpedantic -o CMakeFiles/HW1.dir/camera.cpp.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/src/camera.cpp",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/src/camera.cpp",
+  "output": "src/CMakeFiles/HW1.dir/camera.cpp.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DGLFW_INCLUDE_NONE -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/src/../include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glad/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glm/glm/.. -g -std=c++20 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIE -march=native -Wall -Wextra -Wpedantic -o CMakeFiles/HW1.dir/opengl_context.cpp.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/src/opengl_context.cpp",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/src/opengl_context.cpp",
+  "output": "src/CMakeFiles/HW1.dir/opengl_context.cpp.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DGLFW_INCLUDE_NONE -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/src/../include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glad/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glm/glm/.. -g -std=c++20 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIE -march=native -Wall -Wextra -Wpedantic -o CMakeFiles/HW1.dir/main.cpp.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/src/main.cpp",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/src/main.cpp",
+  "output": "src/CMakeFiles/HW1.dir/main.cpp.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/context.c.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/context.c",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/context.c",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/context.c.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/init.c.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/init.c",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/init.c",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/init.c.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/input.c.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/input.c",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/input.c",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/input.c.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/monitor.c.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/monitor.c",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/monitor.c",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/monitor.c.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/vulkan.c.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/vulkan.c",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/vulkan.c",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/window.c.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/window.c",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/window.c",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/window.c.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/cocoa_init.m.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/cocoa_init.m",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/cocoa_init.m",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/cocoa_init.m.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/cocoa_joystick.m.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/cocoa_joystick.m",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/cocoa_joystick.m",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/cocoa_joystick.m.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/cocoa_monitor.m.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/cocoa_monitor.m",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/cocoa_monitor.m",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/cocoa_monitor.m.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/cocoa_window.m.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/cocoa_window.m",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/cocoa_window.m",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/cocoa_window.m.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/cocoa_time.c.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/cocoa_time.c",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/cocoa_time.c",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/cocoa_time.c.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/posix_thread.c.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/posix_thread.c",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/posix_thread.c",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/posix_thread.c.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/nsgl_context.m.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/nsgl_context.m",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/nsgl_context.m",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/nsgl_context.m.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/egl_context.c.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/egl_context.c",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/egl_context.c",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_GLFW_BUILD_DLL -D_GLFW_USE_CONFIG_H -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/include -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glfw/src -g -std=c99 -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -Wall -fvisibility=hidden -o CMakeFiles/glfw.dir/osmesa_context.c.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/osmesa_context.c",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glfw/src/osmesa_context.c",
+  "output": "extern/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.o"
+},
+{
+  "directory": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/build/extern/glm/glm",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -Dglm_shared_EXPORTS -I/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glm/glm/.. -g -flto=thin -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -fPIC -march=native -o CMakeFiles/glm_shared.dir/detail/glm.cpp.o -c /Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glm/glm/detail/glm.cpp",
+  "file": "/Users/nody/Desktop/school/大三上/計算機圖學概論/final_project/extern/glm/glm/detail/glm.cpp",
+  "output": "extern/glm/glm/CMakeFiles/glm_shared.dir/detail/glm.cpp.o"
+}
+]
