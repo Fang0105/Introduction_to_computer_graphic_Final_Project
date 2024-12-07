@@ -24,6 +24,9 @@
 #define MOVING_SPEED ROTATE_SPEED / 20.f
 #define BALL_MOVING_SPEED 0.05f
 #define SWING_SPEED 2.0f
+
+#define SWING_SPEED_BACK 0.5f
+
 #define ROLLING_SPEED 5.0f
 
 #define HEIGHT_SPEED 0.025f
@@ -88,7 +91,7 @@ void print_vector(glm::vec3 vec) {
     // print out a vector for debugging
     printf("(%f, %f, %f)\n", vec.x, vec.y, vec.z);
 }
-enum class swing_status { NONE = 0, DOWN = -1, UP = 1 }; // define the putter swing status
+enum class swing_status { NONE = 0, DOWN = -1, UP = 1, BACK = 2 }; // define the putter swing status
 
 // ball
 glm::vec3 ball_center_position(2.0f, 0.25f, 2.0f); // the position of the center of the golf ball
@@ -102,6 +105,8 @@ float height_set = 0.3f; //for height control
 
 glm::vec3 putter_center_position(0.0f, (0.0f + height_set), 0.0f); // the position of the center of the putter (the intercetion of hitting part and rod)
 float swing_angle = 0.0f; // the swing angle of the putter
+
+float swing_add_constraint = 0.0f; //the swing angle additional constraint based on the back swing angle
 
 swing_status putter_swing_status = swing_status::NONE; // the swing status of the putter
 
@@ -117,7 +122,9 @@ bool up_pressed = false;
 bool down_pressed = false;
 bool right_pressed = false;
 bool left_pressed = false;
+
 bool space_pressed = false;
+bool space_release = false;
 
 bool upward_pressed = false;
 bool downward_pressed = false;
@@ -216,16 +223,17 @@ void keyCallback(GLFWwindow* window, int key, int, int action, int) {
             last_ball_center_position = glm::vec3(2.0f, 0.25f, 2.0f);
 
             //putter
-            putter_center_position = glm::vec3(0.0f, 0.0f, 0.0f);
+            height_set = 0.3f;
+            putter_center_position = glm::vec3(0.0f, (0.0f + height_set), 0.0f);
             swing_angle = 0.0f;
             putter_swing_status = swing_status::NONE;
 
             // hitting part
             hitting_part_xz_plane_rotate_angle = 0.0f;
-            hitting_part_center_position = glm::vec3(-0.5f, 0.4f, 0.0f);
+            hitting_part_center_position = glm::vec3(-0.5f, (0.4f + height_set), 0.0f);
 
             // rod
-            rod_center_position = glm::vec3(0.0f, 3.0f, 0.0f);
+            rod_center_position = glm::vec3(0.0f, (3.0f + height_set), 0.0f);
 
             // key status
             up_pressed = false;
@@ -233,6 +241,7 @@ void keyCallback(GLFWwindow* window, int key, int, int action, int) {
             right_pressed = false;
             left_pressed = false;
             space_pressed = false;
+            space_release = false;
         }
 
         }
@@ -275,6 +284,13 @@ void keyCallback(GLFWwindow* window, int key, int, int action, int) {
             std::cout << "O (downward) release" << std::endl;
             std::cout << height_set << std::endl;
             downward_pressed = false;
+            break;
+        }
+
+        case GLFW_KEY_SPACE: {
+            std::cout << "space release" << std::endl;
+            space_pressed = false;
+            space_release = true;
             break;
         }
 
@@ -490,6 +506,7 @@ void drawPutter() {
     // Draw the hitting part
     glPushMatrix();
     if (putter_swing_status != swing_status::NONE) {
+
         // the y coordination + 5.6 is because when doing swing calculation, we move the top of the rod to (0, 0, 0) before rotation 
         glTranslatef(hitting_part_center_position.x, hitting_part_center_position.y + 5.6f, hitting_part_center_position.z); // move the hitting part,
         glRotatef(hitting_part_xz_plane_rotate_angle, 0.0f, 1.0f, 0.0f); // rotate along y-axis by yawing angle 
@@ -533,10 +550,18 @@ void drawPutter() {
 void update_putter() {
 
     if (space_pressed) {
+        putter_swing_status = swing_status::BACK;
+        swing_angle -= SWING_SPEED_BACK;
+        if (swing_angle < CONSTRAIN_ANGLE) {
+            swing_angle = CONSTRAIN_ANGLE;
+        }
+    }
+
+    if (space_release) {
         // if the distance between the ball center and the hitting part center <= TOLERATE and the putter is not swinging and the ball is not rolling
         // the ball is hit
         glm::vec3 hitting_part_ball_distance_vector = ball_center_position - hitting_part_center_position;
-        if (glm::length(hitting_part_ball_distance_vector) <= TOLERATE && putter_swing_status == swing_status::NONE && is_rolling == false) {
+        if (glm::length(hitting_part_ball_distance_vector) <= TOLERATE && putter_swing_status == swing_status::UP && is_rolling == false && swing_angle >= 0.0f) {
             is_hit = true;
         }
 
@@ -544,14 +569,15 @@ void update_putter() {
         up_pressed = down_pressed = left_pressed = right_pressed = false; //揮動過程中不能移動桿子
         upward_pressed = downward_pressed = false; //same here
 
-        if (putter_swing_status == swing_status::NONE) {
+        if (putter_swing_status == swing_status::BACK) {
             // if the putter is not swinging
             // set the putter swing status swinging upward
             putter_swing_status = swing_status::UP;
+            swing_add_constraint = swing_angle;
             swing_angle += SWING_SPEED;
         }
         else if (putter_swing_status == swing_status::UP) {
-            if (swing_angle >= -1 * CONSTRAIN_ANGLE) {
+            if ((swing_angle >= -1 * CONSTRAIN_ANGLE) || (swing_angle >= -1 * swing_add_constraint)) {
                 // if the putter reach the limit
                 // set the putter swing status swinging downward
                 putter_swing_status = swing_status::DOWN;
@@ -561,7 +587,7 @@ void update_putter() {
                 // increase the swing angle by SWING_SPEED
                 // and check whether it is over the limit
                 swing_angle += SWING_SPEED;
-                swing_angle = std::min(swing_angle, (float)-1 * CONSTRAIN_ANGLE);
+                swing_angle = std::min(swing_angle, std::min((float)-1 * CONSTRAIN_ANGLE, (float)-1 * swing_add_constraint));
             }
         }
         else if (putter_swing_status == swing_status::DOWN) {
@@ -569,7 +595,7 @@ void update_putter() {
                 // if the putter reach the limit
                 // stop swinging
                 putter_swing_status = swing_status::NONE;
-                space_pressed = false;
+                space_release = false;
             }
             else {
                 // decrease the swing angle by SWING_SPEED
