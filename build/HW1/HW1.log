@@ -1,12 +1,12 @@
 ﻿  main.cpp
-C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(339,41): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(340,35): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(344,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(345,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(398,53): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(467,51): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
-C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(468,50): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
-C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(469,50): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
-C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(491,58): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(701,80): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(348,41): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(349,35): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(353,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(354,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(407,53): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(476,51): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(477,50): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(478,50): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(500,58): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\src\main.cpp(710,80): warning C4305: 'initializing': truncation from 'double' to 'float'
   HW1.vcxproj -> C:\Users\alexp\Документи\cg_final_proj\Introduction_to_computer_graphic_Final_Project\bin\HW1.exe

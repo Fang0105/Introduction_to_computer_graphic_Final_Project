@@ -100,6 +100,15 @@ bool is_rolling = false; // whether the ball is rolling
 std::vector<std::pair<float, glm::vec3> > ball_all_rotation; // all ball rolling direction and angle
 glm::vec3 last_ball_center_position(2.0f, 0.25f, 2.0f); // the ball center position before rolling
 
+// hole 
+glm::vec3 hole_center_position(-21.0f, -0.49f, 21.0f); // the position of the center of the hole
+
+// pole
+glm::vec3 pole_center_position(-21.0f, 3.5f, 21.0f); // the position of the center of the pole
+
+// flag
+glm::vec3 flag_center_position(-21.0f, 6.00f, 20.93f); // the position of the center of the flag
+
 //putter
 float height_set = 0.3f; //for height control
 
@@ -378,7 +387,7 @@ void drawUnitSphere() {
     }
 }
 
-void drawUnitCylinder() {
+void drawUnitCylinder(GLfloat R, GLfloat G, GLfloat B) {
     /* TODO#2-2: Render a unit cylinder
      * Hint:
      *       glBegin/glEnd (https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glBegin.xml)
@@ -396,8 +405,7 @@ void drawUnitCylinder() {
     float height = 1.0f;
     float halfHeight = height / 2.0f; // Half of the cylinder’s height, to center it at the origin.
     float angleStep = (2.0f * M_PI) / CIRCLE_SEGMENT; // Angle step for dividing the circular base.
-
-    glColor3f(0.75f, 0.75f, 0.75f); // Set the cylinder color to silver (RGB: 0.75, 0.75, 0.75).
+    glColor3f(R, G, B); // Set the cylinder color to silver (RGB: 0.75, 0.75, 0.75).
 
     // Draw the side surface of the cylinder using triangles
     glBegin(GL_TRIANGLES);
@@ -463,6 +471,7 @@ void drawUnitCylinder() {
     glEnd();
 }
 
+
 void light() {
     GLfloat light_specular[] = { 0.6, 0.6, 0.6, 1 };
     GLfloat light_diffuse[] = { 0.6, 0.6, 0.6, 1 };
@@ -525,7 +534,7 @@ void drawPutter() {
     glRotatef(90.0f, 1.0f, 0.0f, 0.0f); // rotate the hitting part along x-axis by 90 degrees
     glRotatef(90.0f, 0.0f, 1.0f, 0.0f); // rotate the hitting part along y-axis by 90 degrees
     glScalef(0.4f, 0.5f, 1.0f); // scale the cylinder to make it look like a hitting part
-    drawUnitCylinder();
+    drawUnitCylinder(0.75f, 0.75f, 0.75f);
     glPopMatrix();
 
     // Draw the rod part (the same with drawing the hitting part)
@@ -542,7 +551,7 @@ void drawPutter() {
         glRotatef(hitting_part_xz_plane_rotate_angle, 0.0f, 1.0f, 0.0f);
     }
     glScalef(0.15f, 6.0f, 0.15f);
-    drawUnitCylinder();
+    drawUnitCylinder(0.75f, 0.75f, 0.75f);
     glPopMatrix();
 }
 
@@ -707,6 +716,51 @@ void update_ball() {
 }
 
 
+void drawHole()
+{
+    // Draw the hole
+    glPushMatrix();
+    glTranslatef(hole_center_position.x, hole_center_position.y, hole_center_position.z);
+    glScalef(0.7f, 1.0f, 0.7f);
+    drawUnitCylinder(0.0f, 0.0f, 0.0f); //black
+    glPopMatrix();
+}
+
+
+void drawFlag()
+{
+    // Draw the flag pole
+    glPushMatrix();
+    glTranslatef(pole_center_position.x, pole_center_position.y, pole_center_position.z);
+    glScalef(0.07f, 7.0f, 0.07f);
+    drawUnitCylinder(0.5451f, 0.2706f, 0.0745f); // The color here is a wood-like brown
+    glPopMatrix();
+
+    // Draw the red square flag
+    glPushMatrix();
+    glTranslatef(flag_center_position.x, flag_center_position.y, flag_center_position.z);
+    glColor3f(1.0f, 0.0f, 0.0f);
+
+    glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+    glScalef(2.0f, 2.0f, 2.5f);
+
+    glBegin(GL_TRIANGLES);
+    glNormal3f(0.0f, 0.0f, 1.0f);
+
+    // First triangle
+    glVertex3f(0.0f, 0.0f, 0.0f);  // bottom-left corner of the flag near the pole
+    glVertex3f(0.5f, 0.0f, 0.0f);  // bottom-right corner
+    glVertex3f(0.5f, 0.5f, 0.0f);  // top-right corner
+
+    // Second triangle
+    glVertex3f(0.0f, 0.0f, 0.0f);  // bottom-left corner again
+    glVertex3f(0.5f, 0.5f, 0.0f);  // top-right corner
+    glVertex3f(0.0f, 0.5f, 0.0f);  // top-left corner
+    glEnd();
+
+    glPopMatrix();
+}
+
 
 
 
@@ -806,7 +860,7 @@ int main() {
         glPushMatrix();
         glScalef(7, 1, 7);
         glBegin(GL_TRIANGLE_STRIP);
-        glColor3f(1.0f, 1.0f, 1.0f);
+        glColor3f(0.25490f, 0.59608f, 0.03922f); // HEX #41980a converted to RGB
         glNormal3f(0.0f, 1.0f, 0.0f);
         glVertex3f(-5.0f, 0.0f, -5.0f);
         glVertex3f(-5.0f, 0.0f, 5.0f);
@@ -850,6 +904,12 @@ int main() {
          *       You can just use initial value for rotate and translate the whole putter before finishing TODO#3 and TODO#4
          */
         drawGolfBall();
+
+        glDisable(GL_CULL_FACE);
+        drawHole();
+        drawFlag();
+        glEnable(GL_CULL_FACE);
+
 
 #ifdef __APPLE__
         // Some platform need explicit glFlush
