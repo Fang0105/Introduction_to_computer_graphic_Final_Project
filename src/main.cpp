@@ -96,9 +96,13 @@ enum class swing_status { NONE = 0, DOWN = -1, UP = 1, BACK = 2 }; // define the
 // ball
 glm::vec3 ball_center_position(2.0f, 0.25f, 2.0f); // the position of the center of the golf ball
 bool is_hit = false; // whether the ball is hit
-bool is_rolling = false; // whether the ball is rolling
+bool is_moving = false; // whether the ball is rolling
 std::vector<std::pair<float, glm::vec3> > ball_all_rotation; // all ball rolling direction and angle
 glm::vec3 last_ball_center_position(2.0f, 0.25f, 2.0f); // the ball center position before rolling
+glm::vec3 ball_velocity(0.0f, 0.0f, 0.0f);
+float max_swing_angle = 0.0f;
+bool rolling = false;
+std::vector<glm::vec3>ball_path;
 
 // hole 
 glm::vec3 hole_center_position(-21.0f, -0.49f, 21.0f); // the position of the center of the hole
@@ -137,7 +141,28 @@ bool space_release = false;
 
 bool upward_pressed = false;
 bool downward_pressed = false;
+
+bool no_fly = false;
 // ===================================================================================================================
+
+
+
+// =================================================== physics variables=======================================================
+const float g = 9.8f;            // 重力加速度
+const float rho = 1.225f * 0.1f;        // 空氣密度 (kg/m^3)
+const float Cd = 0.47f;          // 阻力係數
+const float R = 0.25f;           // 球的半徑 (m)
+const float m = 0.045f;          // 球的質量 (kg)
+const float e = 0.8f;            // 恢復係數
+const float mu_k = 0.1f;         // 動摩擦係數
+const float mu_r = 0.02f;        // 滾動摩擦係數
+const float Sw = 0.5f;           // 風的強度 (m/s)
+const float Cl = 0.5f;
+
+// 數值積分參數
+const float dt = 0.01f;          // 時間步長 (s)
+
+// ============================================================================================================================
 
 
 void resizeCallback(GLFWwindow* window, int width, int height) {
@@ -175,133 +200,147 @@ void keyCallback(GLFWwindow* window, int key, int, int action, int) {
 
     if (action == GLFW_PRESS) {
         switch (key) {
-        case GLFW_KEY_RIGHT: {
-            std::cout << "right pressed" << std::endl;
-            std::cout << hitting_part_xz_plane_rotate_angle << std::endl;
-            right_pressed = true;
-            break;
-        }
+            case GLFW_KEY_RIGHT: {
+                std::cout << "right pressed" << std::endl;
+                std::cout << hitting_part_xz_plane_rotate_angle << std::endl;
+                right_pressed = true;
+                break;
+            }
 
-        case GLFW_KEY_LEFT: {
-            std::cout << "left pressed" << std::endl;
-            std::cout << hitting_part_xz_plane_rotate_angle << std::endl;
-            left_pressed = true;
-            break;
-        }
+            case GLFW_KEY_LEFT: {
+                std::cout << "left pressed" << std::endl;
+                std::cout << hitting_part_xz_plane_rotate_angle << std::endl;
+                left_pressed = true;
+                break;
+            }
 
-        case GLFW_KEY_UP: {
-            std::cout << "up pressed" << std::endl;
-            up_pressed = true;
-            break;
-        }
+            case GLFW_KEY_UP: {
+                std::cout << "up pressed" << std::endl;
+                up_pressed = true;
+                break;
+            }
 
-        case GLFW_KEY_DOWN: {
-            std::cout << "down pressed" << std::endl;
-            down_pressed = true;
-            break;
-        }
+            case GLFW_KEY_DOWN: {
+                std::cout << "down pressed" << std::endl;
+                down_pressed = true;
+                break;
+            }
 
-        case GLFW_KEY_SPACE: {
-            std::cout << "space pressed" << std::endl;
-            space_pressed = true;
-            break;
-        }
+            case GLFW_KEY_SPACE: {
+                std::cout << "space pressed" << std::endl;
+                space_pressed = true;
+                break;
+            }
 
-        case GLFW_KEY_I: {
-            std::cout << "I (upward) pressed" << std::endl;
-            std::cout << height_set << std::endl;
-            upward_pressed = true;
-            break;
-        }
+            case GLFW_KEY_I: {
+                std::cout << "I (upward) pressed" << std::endl;
+                std::cout << height_set << std::endl;
+                upward_pressed = true;
+                break;
+            }
 
-        case GLFW_KEY_O: {
-            std::cout << "O (downward) pressed" << std::endl;
-            std::cout << height_set << std::endl;
-            downward_pressed = true;
-            break;
-        }
+            case GLFW_KEY_O: {
+                std::cout << "O (downward) pressed" << std::endl;
+                std::cout << height_set << std::endl;
+                downward_pressed = true;
+                break;
+            }
 
-        case GLFW_KEY_ENTER: {
-            // press enter for reset
-            std::cout << "enter pressed" << std::endl;
-            // ball
-            ball_center_position = glm::vec3(2.0f, 0.25f, 2.0f);
-            is_hit = false;
-            is_rolling = false;
-            ball_all_rotation.clear();
-            last_ball_center_position = glm::vec3(2.0f, 0.25f, 2.0f);
+            case GLFW_KEY_C: {
+                ball_path.clear();
+                break;
+            }
 
-            //putter
-            height_set = 0.3f;
-            putter_center_position = glm::vec3(0.0f, (0.0f + height_set), 0.0f);
-            swing_angle = 0.0f;
-            putter_swing_status = swing_status::NONE;
+            case GLFW_KEY_Z: {
+                no_fly = !no_fly;
+                break;
+            }
 
-            // hitting part
-            hitting_part_xz_plane_rotate_angle = 0.0f;
-            hitting_part_center_position = glm::vec3(-0.5f, (0.4f + height_set), 0.0f);
+            case GLFW_KEY_ENTER: {
+                // press enter for reset
+                std::cout << "enter pressed" << std::endl;
+                // ball
+                ball_center_position = glm::vec3(2.0f, 0.25f, 2.0f);
+                is_hit = false;
+                is_moving = false;
+                ball_all_rotation.clear();
+                last_ball_center_position = glm::vec3(2.0f, 0.25f, 2.0f);
 
-            // rod
-            rod_center_position = glm::vec3(0.0f, (3.0f + height_set), 0.0f);
+                //putter
+                height_set = 0.3f;
+                putter_center_position = glm::vec3(0.0f, (0.0f + height_set), 0.0f);
+                swing_angle = 0.0f;
+                putter_swing_status = swing_status::NONE;
 
-            // key status
-            up_pressed = false;
-            down_pressed = false;
-            right_pressed = false;
-            left_pressed = false;
-            space_pressed = false;
-            space_release = false;
-        }
+                // hitting part
+                hitting_part_xz_plane_rotate_angle = 0.0f;
+                hitting_part_center_position = glm::vec3(-0.5f, (0.4f + height_set), 0.0f);
+
+                // rod
+                rod_center_position = glm::vec3(0.0f, (3.0f + height_set), 0.0f);
+
+                // key status
+                up_pressed = false;
+                down_pressed = false;
+                right_pressed = false;
+                left_pressed = false;
+                space_pressed = false;
+                space_release = false;
+
+                ball_path.clear();
+
+                break;
+            }
 
         }
     }
 
     if (action == GLFW_RELEASE) {
         switch (key) {
-        case GLFW_KEY_RIGHT: {
-            std::cout << "right release" << std::endl;
-            right_pressed = false;
-            break;
-        }
+            case GLFW_KEY_RIGHT: {
+                std::cout << "right release" << std::endl;
+                right_pressed = false;
+                break;
+            }
 
-        case GLFW_KEY_LEFT: {
-            std::cout << "left release" << std::endl;
-            left_pressed = false;
-            break;
-        }
+            case GLFW_KEY_LEFT: {
+                std::cout << "left release" << std::endl;
+                left_pressed = false;
+                break;
+            }
 
-        case GLFW_KEY_UP: {
-            std::cout << "up release" << std::endl;
-            up_pressed = false;
-            break;
-        }
+            case GLFW_KEY_UP: {
+                std::cout << "up release" << std::endl;
+                up_pressed = false;
+                break;
+            }
 
-        case GLFW_KEY_DOWN: {
-            std::cout << "down release" << std::endl;
-            down_pressed = false;
-            break;
-        }
+            case GLFW_KEY_DOWN: {
+                std::cout << "down release" << std::endl;
+                down_pressed = false;
+                break;
+            }
 
-        case GLFW_KEY_I: {
-            std::cout << "I (upward) release" << std::endl;
-            std::cout << height_set << std::endl;
-            upward_pressed = false;
-            break;
-        }
+            case GLFW_KEY_I: {
+                std::cout << "I (upward) release" << std::endl;
+                std::cout << height_set << std::endl;
+                upward_pressed = false;
+                break;
+            }
 
-        case GLFW_KEY_O: {
-            std::cout << "O (downward) release" << std::endl;
-            std::cout << height_set << std::endl;
-            downward_pressed = false;
-            break;
-        }
+            case GLFW_KEY_O: {
+                std::cout << "O (downward) release" << std::endl;
+                std::cout << height_set << std::endl;
+                downward_pressed = false;
+                break;
+            }
 
-        case GLFW_KEY_SPACE: {
-            std::cout << "space release" << std::endl;
-            space_pressed = false;
-            space_release = true;
-            break;
-        }
+            case GLFW_KEY_SPACE: {
+                std::cout << "space release" << std::endl;
+                space_pressed = false;
+                space_release = true;
+                break;
+            }
 
         }
     }
@@ -570,8 +609,9 @@ void update_putter() {
         // if the distance between the ball center and the hitting part center <= TOLERATE and the putter is not swinging and the ball is not rolling
         // the ball is hit
         glm::vec3 hitting_part_ball_distance_vector = ball_center_position - hitting_part_center_position;
-        if (glm::length(hitting_part_ball_distance_vector) <= TOLERATE && putter_swing_status == swing_status::UP && is_rolling == false && swing_angle >= 0.0f) {
+        if (glm::length(hitting_part_ball_distance_vector) <= TOLERATE && putter_swing_status == swing_status::UP && is_moving == false && swing_angle >= 0.0f) {
             is_hit = true;
+            max_swing_angle = swing_angle;
         }
 
 
@@ -685,33 +725,215 @@ void update_putter() {
 }
 
 
-void update_ball() {
-    if (is_hit) {
-        // if the ball is just hit, set it rolling 
-        is_hit = false;
-        is_rolling = true;
+glm::vec3 calculateAerodynamicForces(const glm::vec3& wind){
+    glm::vec3 relative_velocity = ball_velocity - wind;
+    float speed = glm::length(relative_velocity);
+
+    // 如果速度接近於 0，則沒有空氣阻力和升力
+    if (speed < 1e-6f) {
+        return glm::vec3(0.0f);
     }
-    if (is_rolling) {
-        if (glm::length(last_ball_center_position - ball_center_position) >= DISTANCE_TOLERANCE) {
-            // if the ball is just stop, the update the last position as position now
-            last_ball_center_position = ball_center_position;
-            is_rolling = false;
+
+    float A = M_PI * R * R;
+
+    // 計算空氣阻力
+    glm::vec3 drag_force = -0.5f * rho * Cd * A * speed * relative_velocity;
+
+    glm::vec3 angular_velocity = ball_velocity / R;
+
+    glm::vec3 lift_force = 0.5f * rho * Cl * A * speed * glm::cross(angular_velocity, glm::normalize(relative_velocity));
+    if(ball_velocity.y < 0.0f){
+        lift_force = glm::vec3(0.0f, 0.0f, 0.0f);
+    }
+
+    return drag_force + lift_force;
+}
+
+
+void updateBallRotation(const glm::vec3& old_position, const glm::vec3& new_position, float ball_radius) {
+    // 計算移動向量
+    glm::vec3 movement_vector = new_position - old_position;
+
+    // 如果移動距離接近 0，則不更新旋轉
+    float distance = glm::length(movement_vector);
+    if (distance < 1e-6f) {
+        return;
+    }
+
+    // 計算旋轉角度（以度為單位）
+    float rotation_angle = (distance / ball_radius) * (180.0f / M_PI);
+
+    // 計算旋轉軸（與移動方向垂直）
+    glm::vec3 rotation_axis = glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), glm::normalize(movement_vector));
+    if (glm::length(rotation_axis) < 1e-6f) {
+        // 如果移動方向與垂直向量平行，則選擇另一個垂直方向
+        rotation_axis = glm::vec3(1.0f, 0.0f, 0.0f);
+    } else {
+        rotation_axis = glm::normalize(rotation_axis);
+    }
+
+    // 將旋轉角度和旋轉軸加入到 ball_all_rotation
+    ball_all_rotation.push_back(std::make_pair(rotation_angle, rotation_axis));
+}
+
+glm::vec3 calculateNextBallPosition(){
+
+    glm::vec3 wind(-Sw, 0.0f, 0.0f);
+
+    glm::vec3 next_ball_position;
+    
+    if(rolling){
+
+        if(glm::length(ball_velocity) < 0.5f){
+            print_vector(ball_center_position);
+            is_moving = false;
+            ball_velocity = glm::vec3(0.0f ,0.0f ,0.0f);
+            rolling = false;
+            return ball_center_position;
+        }
+
+
+
+        glm::vec3 drag_force = calculateAerodynamicForces(wind);
+        glm::vec3 rolling_force = -mu_r * m * g * glm::normalize(ball_velocity);
+
+        glm::vec3 total_force = drag_force + rolling_force;
+
+        glm::vec3 acceleration = total_force / m;
+
+        ball_velocity += acceleration * dt;
+        next_ball_position = ball_center_position + ball_velocity * dt;
+        next_ball_position.y = R;
+
+    }else{
+        glm::vec3 gravity(0.0f, -m * g, 0.0f);
+        glm::vec3 drag_force = calculateAerodynamicForces(wind);
+
+        glm::vec3 total_force = gravity + drag_force;
+
+        glm::vec3 acceleration = total_force / m;
+
+        ball_velocity += acceleration * dt;
+        next_ball_position = ball_center_position + ball_velocity * dt;
+
+        if(next_ball_position.y <= R){
+            next_ball_position.y = R;
+            ball_velocity.y = -e * ball_velocity.y;
+            ball_velocity.x *= (1 - mu_k);
+            ball_velocity.z *= (1 - mu_k);
+
+            if(std::abs(ball_velocity.y) < 0.5f){
+                rolling = true;
+                ball_velocity.y = 0.0f;
+            }
+        }
+    }
+
+    return next_ball_position;
+}
+
+void update_ball() {
+
+    if (is_hit) {
+        is_hit = false;
+        is_moving = true;
+        ball_path.clear();
+
+
+        glm::vec3 ball_move_directrion = glm::cross((rod_center_position - putter_center_position), (hitting_part_center_position - putter_center_position));
+
+        if(!no_fly){
+            ball_move_directrion.y = (ball_center_position - hitting_part_center_position).y * 7.0f;
+        }else{
+            ball_move_directrion.y = 0.0f;
+        }
+
+        ball_velocity = 1.0f * max_swing_angle * 10.0f * (ball_move_directrion);
+    }
+
+    if (is_moving) {
+        
+        glm::vec3 next_ball_position = calculateNextBallPosition();
+
+        updateBallRotation(ball_center_position, next_ball_position, R);
+
+        ball_center_position = next_ball_position;
+
+        ball_path.push_back(ball_center_position);
+
+    }
+}
+
+
+
+
+void drawUnitSphere_red() {
+    /* TODO#2-1: Render a unit sphere
+     * Hint:
+     *       glBegin/glEnd (https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glBegin.xml)
+     *       glColor3f (https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glBegin.xml)
+     *       glVertex3f (https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glVertex.xml)
+     *       glNormal (https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glNormal.xml)
+     *       glScalef (https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glScale.xml)
+     * Note:
+     *       You can refer to ppt "Draw Sphere" page and `SECTOR` and `STACK`
+     *       You can use color `CYAN` and `PURPLE`
+     *       You should set normal for lighting
+     *       You should use GL_TRIANGLES_STRIP
+     */
+    float sectorStep = 2 * M_PI / SECTOR;
+    float stackStep = M_PI / STACK;
+
+    // Loop through each stack
+    for (int i = 0; i < STACK; ++i) {
+        float stackAngle1 = M_PI / 2 - i * stackStep;       // Starting latitude angle
+        float stackAngle2 = M_PI / 2 - (i + 1) * stackStep; // Next latitude angle
+
+        float xy1 = cos(stackAngle1);  // Radius of the ring at stack 1
+        float z1 = sin(stackAngle1);   // Z value at stack 1
+
+        float xy2 = cos(stackAngle2);  // Radius of the ring at stack 2
+        float z2 = sin(stackAngle2);   // Z value at stack 2
+
+        // Set color based on stack level (upper or lower half)
+        if (i < STACK / 2) {
+            glColor3f(1.0f, 0.0f, 0.0f);
         }
         else {
-            // the moving direction is (rod position - putter position) cross (hitting part position - putter position), the same with putter moving direction
-            glm::vec3 ball_move_directrion = glm::cross((rod_center_position - putter_center_position), (hitting_part_center_position - putter_center_position));
-            glm::vec3 up(0.0f, 1.0f, 0.0f);
-            //the rolling direction is the y-axis cross the moving direction
-            glm::vec3 ball_rotation_axis = glm::cross(up, ball_move_directrion);
-
-
-            ball_center_position += glm::normalize(ball_move_directrion) * BALL_MOVING_SPEED; // calculate the position of the ball
-
-            float ball_rolling_angle = BALL_MOVING_SPEED * 360.0f * 2.0f / M_PI; // calculate the rolling angle, not based on ROLLING_SPEED, but according on BALL_MOVING_SPEED
-
-            ball_all_rotation.push_back(std::make_pair(ball_rolling_angle, ball_rotation_axis)); // record the rolling direction and rolling angle
-
+            glColor3f(1.0f, 0.0f, 0.0f);
         }
+
+        glBegin(GL_TRIANGLE_STRIP);
+        for (int j = 0; j <= SECTOR; ++j) {
+            float sectorAngle = j * sectorStep;  // Longitude angle
+
+            // Vertex 1 (for the current stack)
+            float x1 = xy1 * cos(sectorAngle);
+            float y1 = xy1 * sin(sectorAngle);
+            glNormal3f(x1, y1, z1);  // Normal for lighting
+            glVertex3f(x1, y1, z1);  // Vertex position
+
+            // Vertex 2 (for the next stack)
+            float x2 = xy2 * cos(sectorAngle);
+            float y2 = xy2 * sin(sectorAngle);
+            glNormal3f(x2, y2, z2);  // Normal for lighting
+            glVertex3f(x2, y2, z2);  // Vertex position
+        }
+        glEnd();
+    }
+}
+
+
+void drawBallPath(){
+    for(glm::vec3 pos:ball_path){
+        // Draw the golf ball
+        glPushMatrix();
+        glTranslatef(pos.x, pos.y, pos.z); // move the ball to its position 
+        glScalef(0.01f, 0.01f, 0.01f); // scale the ball by radius
+        // set the color red
+        glColor3f(1.0f, 0.0f, 0.0f);
+        drawUnitSphere_red();
+        glPopMatrix();
     }
 }
 
@@ -855,6 +1077,8 @@ int main() {
          * "delta_" to update.
          */
         update_ball();
+
+        drawBallPath();
 
         // Render a white plane
         glPushMatrix();
