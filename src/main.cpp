@@ -228,6 +228,7 @@ void keyCallback(GLFWwindow* window, int key, int, int action, int) {
 
             case GLFW_KEY_SPACE: {
                 std::cout << "space pressed" << std::endl;
+                // space_pressed = true;
                 if (putter_swing_status == swing_status::NONE)
                 {
                     space_pressed = true;
@@ -614,7 +615,6 @@ void update_putter() {
         glm::vec3 hitting_part_ball_distance_vector = ball_center_position - hitting_part_center_position;
         if (glm::length(hitting_part_ball_distance_vector) <= TOLERATE && putter_swing_status == swing_status::UP && is_moving == false && swing_angle >= 0.0f) {
             is_hit = true;
-            max_swing_angle = swing_angle;
         }
 
 
@@ -627,6 +627,8 @@ void update_putter() {
             putter_swing_status = swing_status::UP;
             swing_add_constraint = swing_angle;
             swing_angle += SWING_SPEED;
+            max_swing_angle = std::abs(swing_angle);
+            std::cout << "set max_swing_angle: " << max_swing_angle << std::endl;
         }
         else if (putter_swing_status == swing_status::UP) {
             if ((swing_angle >= -1 * CONSTRAIN_ANGLE) || (swing_angle >= -1 * swing_add_constraint)) {
@@ -846,12 +848,20 @@ void update_ball() {
         glm::vec3 ball_move_directrion = glm::cross((rod_center_position - putter_center_position), (hitting_part_center_position - putter_center_position));
 
         if(!no_fly){
-            ball_move_directrion.y = (ball_center_position - hitting_part_center_position).y * 7.0f;
+            ball_move_directrion.y = (1.0f - std::abs((ball_center_position - hitting_part_center_position).y)) * 2.0f;
+            // ball_move_directrion.y = ((ball_center_position - hitting_part_center_position).y);
         }else{
             ball_move_directrion.y = 0.0f;
         }
-
-        ball_velocity = 1.0f * max_swing_angle * 10.0f * (ball_move_directrion);
+        std::cout << "max_swing_angle : " << max_swing_angle << std::endl;
+        std::cout << "ball_move_directrion : ";
+        print_vector(ball_move_directrion);
+        // max_swing_angle = 1.0f;
+        float amp = std::abs(max_swing_angle) / 44.0f + (43.0f / 44.0f);
+        std::cout << "amp : " << amp << std::endl;
+        ball_velocity = 1.0f * amp * 5.0f * (ball_move_directrion);
+        // ball_velocity = -1.0f * std::abs(max_swing_angle) * 10.0f * (ball_move_directrion);
+        max_swing_angle = 0.0f;
     }
 
     if (is_moving) {
