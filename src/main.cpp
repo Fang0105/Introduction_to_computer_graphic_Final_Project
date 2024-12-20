@@ -1089,10 +1089,10 @@ int main() {
         glBegin(GL_TRIANGLE_STRIP);
         glColor3f(0.25490f, 0.59608f, 0.03922f); // HEX #41980a converted to RGB
         glNormal3f(0.0f, 1.0f, 0.0f);
-        glVertex3f(-5.0f, 0.0f, -5.0f);
-        glVertex3f(-5.0f, 0.0f, 5.0f);
-        glVertex3f(5.0f, 0.0f, -5.0f);
-        glVertex3f(5.0f, 0.0f, 5.0f);
+        glVertex3f(-50.0f, 0.0f, -50.0f);
+        glVertex3f(-50.0f, 0.0f, 50.0f);
+        glVertex3f(50.0f, 0.0f, -50.0f);
+        glVertex3f(50.0f, 0.0f, 50.0f);
         glEnd();
         glPopMatrix();
 
