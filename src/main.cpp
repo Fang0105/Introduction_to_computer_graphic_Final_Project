@@ -228,7 +228,10 @@ void keyCallback(GLFWwindow* window, int key, int, int action, int) {
 
             case GLFW_KEY_SPACE: {
                 std::cout << "space pressed" << std::endl;
-                space_pressed = true;
+                if (putter_swing_status == swing_status::NONE)
+                {
+                    space_pressed = true;
+                }
                 break;
             }
 
